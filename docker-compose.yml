@@ -1,0 +1,38 @@
+version: '2'
+
+services:
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: mos
+      POSTGRES_PASSWORD: mos
+      POSTGRES_DB: mos
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+  backend:
+    build: ./submodules/mos-backend/
+    restart: on-failure
+    container_name: mos-backend
+    environment:
+      - MOS_BACKEND_DEBUG=1
+      - MOS_BACKEND_HOST=0.0.0.0
+      - MOS_BACKEND_PORT=8000
+      - MOS_ADMIN_USR=guest
+      - MOS_ADMIN_PWD=guest
+      - MOS_ADMIN_EMAIL=some@email.net
+      - MOS_DATABASE_NAME=mos
+      - MOS_DATABASE_USR=mos
+      - MOS_DATABASE_PWD=mos
+      - MOS_DATABASE_HOST=db
+      - MOS_DATABASE_PORT=5432
+    ports:
+      - "8000:8000"
+    links:
+      - db
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
