@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: mos
       POSTGRES_DB: mos
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - postgres_data:/var/lib/postgresql/data
 
   backend:
     build: ./submodules/mos-backend/
@@ -19,8 +19,8 @@ services:
       - MOS_BACKEND_DEBUG=1
       - MOS_BACKEND_HOST=0.0.0.0
       - MOS_BACKEND_PORT=8000
-      - MOS_ADMIN_USR=guest
-      - MOS_ADMIN_PWD=guest
+      - MOS_ADMIN_USR=mos
+      - MOS_ADMIN_PWD=demo
       - MOS_ADMIN_EMAIL=some@email.net
       - MOS_DATABASE_NAME=mos
       - MOS_DATABASE_USR=mos
@@ -33,6 +33,20 @@ services:
       - db
     depends_on:
       - db
+    volumes:
+      - django_data:/mos-backend
+
+  frontend:
+    build: ./submodules/mos-frontend/
+    restart: on-failure
+    container_name: mos-frontend
+    ports:
+      - "4200:4200"
+    links:
+      - backend
+    depends_on:
+      - backend 
 
 volumes:
   postgres_data:
+  django_data:
