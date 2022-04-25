@@ -11,6 +11,9 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  redis:
+    image: redis:latest
+
   backend:
     build: ./submodules/mos-backend/
     restart: on-failure
@@ -26,7 +29,12 @@ services:
       - MOS_DATABASE_USR=mos
       - MOS_DATABASE_PWD=mos
       - MOS_DATABASE_HOST=db
+      - MOS_REDIS_DB=0
+      - MOS_REDIS_PORT=6379
+      - MOS_REDIS_HOST=redis
       - MOS_DATABASE_PORT=5432
+      - MOS_FRONTEND_HOST=localhost
+      - MOS_FRONTEND_PORT=4200
     ports:
       - "8000:8000"
     links:
