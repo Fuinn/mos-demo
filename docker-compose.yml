@@ -11,6 +11,9 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  rabbit:
+    image: rabbitmq:latest
+
   redis:
     image: redis:latest
 
@@ -29,6 +32,10 @@ services:
       - MOS_DATABASE_USR=mos
       - MOS_DATABASE_PWD=mos
       - MOS_DATABASE_HOST=db
+      - MOS_RABBIT_PORT=5672  
+      - MOS_RABBIT_USR=guest
+      - MOS_RABBIT_PWD=guest
+      - MOS_RABBIT_HOST=rabbit
       - MOS_REDIS_DB=0
       - MOS_REDIS_PORT=6379
       - MOS_REDIS_HOST=redis
@@ -53,7 +60,29 @@ services:
     links:
       - backend
     depends_on:
-      - backend 
+      - backend
+
+  compute-py:
+    build: 
+      context: ./submodules/mos-compute/
+      dockerfile: Dockerfile-py
+    restart: on-failure
+    container_name: mos-compute-py
+    environment:
+      - MOS_BACKEND_HOST=localhost
+      - MOS_BACKEND_PORT=8000
+      - MOS_ADMIN_USR=mos
+      - MOS_ADMIN_PWD=demo
+      - MOS_RABBIT_PORT=5672
+      - MOS_RABBIT_USR=guest
+      - MOS_RABBIT_PWD=guest
+      - MOS_RABBIT_HOST=rabbit
+    links:
+      - backend
+    depends_on:
+      - backend
+      - rabbit
+      - redis
 
 volumes:
   postgres_data:

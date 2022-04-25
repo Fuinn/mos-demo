@@ -9,7 +9,6 @@ All-in-one MOS application launched using docker containers.
 ## Launching the App
 
 Execute the following script:
-
 ```
 ./scripts/mos-demo-run.sh
 ```
@@ -22,3 +21,10 @@ The following MOS components are then available:
 The default MOS admin user credentials are:
 * username: ``mos``
 * password: ``demo``
+
+## Resetting all Data
+
+Execute the following script:
+```
+./scripts/mos-demo-reset.sh
+```
