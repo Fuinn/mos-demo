@@ -1,4 +1,4 @@
-version: '2'
+version: '2.1'
 
 services:
 
@@ -13,6 +13,11 @@ services:
 
   rabbit:
     image: rabbitmq:latest
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 30s
+      retries: 3
 
   redis:
     image: redis:latest
@@ -23,7 +28,7 @@ services:
     container_name: mos-backend
     environment:
       - MOS_BACKEND_DEBUG=1
-      - MOS_BACKEND_HOST=0.0.0.0
+      - MOS_BACKEND_HOST=backend
       - MOS_BACKEND_PORT=8000
       - MOS_ADMIN_USR=mos
       - MOS_ADMIN_PWD=demo
@@ -32,6 +37,7 @@ services:
       - MOS_DATABASE_USR=mos
       - MOS_DATABASE_PWD=mos
       - MOS_DATABASE_HOST=db
+      - MOS_DATABASE_PORT=5432
       - MOS_RABBIT_PORT=5672  
       - MOS_RABBIT_USR=guest
       - MOS_RABBIT_PWD=guest
@@ -39,17 +45,14 @@ services:
       - MOS_REDIS_DB=0
       - MOS_REDIS_PORT=6379
       - MOS_REDIS_HOST=redis
-      - MOS_DATABASE_PORT=5432
       - MOS_FRONTEND_HOST=localhost
       - MOS_FRONTEND_PORT=4200
     ports:
       - "8000:8000"
-    links:
-      - db
     depends_on:
       - db
     volumes:
-      - django_data:/mos-backend
+      - django_data:/mos-backend/service/
 
   frontend:
     build: ./submodules/mos-frontend/
@@ -57,8 +60,6 @@ services:
     container_name: mos-frontend
     ports:
       - "4200:4200"
-    links:
-      - backend
     depends_on:
       - backend
 
@@ -69,7 +70,7 @@ services:
     restart: on-failure
     container_name: mos-compute-py
     environment:
-      - MOS_BACKEND_HOST=localhost
+      - MOS_BACKEND_HOST=backend
       - MOS_BACKEND_PORT=8000
       - MOS_ADMIN_USR=mos
       - MOS_ADMIN_PWD=demo
@@ -77,12 +78,9 @@ services:
       - MOS_RABBIT_USR=guest
       - MOS_RABBIT_PWD=guest
       - MOS_RABBIT_HOST=rabbit
-    links:
-      - backend
     depends_on:
-      - backend
-      - rabbit
-      - redis
+      rabbit:
+        condition: service_healthy
 
 volumes:
   postgres_data:
