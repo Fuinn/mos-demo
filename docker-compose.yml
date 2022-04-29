@@ -1,4 +1,4 @@
-version: '2.1'
+version: '2.3'
 
 services:
 
@@ -14,10 +14,10 @@ services:
   rabbit:
     image: rabbitmq:latest
     healthcheck:
-      test: rabbitmq-diagnostics -q ping
-      interval: 30s
-      timeout: 30s
-      retries: 3
+      test: rabbitmq-diagnostics -q status
+      interval: 1s
+      timeout: 3s
+      retries: 30
 
   redis:
     image: redis:latest
@@ -51,6 +51,7 @@ services:
       - "8000:8000"
     depends_on:
       - db
+      - redis
     volumes:
       - django_data:/mos-backend/service/
 
@@ -81,6 +82,25 @@ services:
     depends_on:
       rabbit:
         condition: service_healthy
+
+  compute-jl:
+    build: 
+      context: ./submodules/mos-compute/
+      dockerfile: Dockerfile-jl
+    restart: on-failure
+    container_name: mos-compute-jl
+    environment:
+      - MOS_BACKEND_HOST=backend
+      - MOS_BACKEND_PORT=8000
+      - MOS_ADMIN_USR=mos
+      - MOS_ADMIN_PWD=demo
+      - MOS_RABBIT_PORT=5672
+      - MOS_RABBIT_USR=guest
+      - MOS_RABBIT_PWD=guest
+      - MOS_RABBIT_HOST=rabbit
+    depends_on:
+      rabbit:
+        condition: service_healthy  
 
 volumes:
   postgres_data:
