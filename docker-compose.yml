@@ -52,7 +52,7 @@ services:
       - db
       - redis
     volumes:
-      - backend_data: /mos-backend/service/media
+      - backend_data:/mos-backend/service/media
 
   frontend:
     image: tomastinoco/mos-frontend:latest
