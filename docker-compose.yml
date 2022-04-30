@@ -23,9 +23,8 @@ services:
     image: redis:latest
 
   backend:
-    build: ./submodules/mos-backend/
+    image: tomastinoco/mos-backend:latest
     restart: on-failure
-    container_name: mos-backend
     environment:
       - MOS_BACKEND_DEBUG=1
       - MOS_BACKEND_HOST=backend
@@ -53,23 +52,19 @@ services:
       - db
       - redis
     volumes:
-      - django_data:/mos-backend/service/
+      - backend_data: /mos-backend/service/media
 
   frontend:
-    build: ./submodules/mos-frontend/
+    image: tomastinoco/mos-frontend:latest
     restart: on-failure
-    container_name: mos-frontend
     ports:
       - "4200:4200"
     depends_on:
       - backend
 
   compute-py:
-    build: 
-      context: ./submodules/mos-compute/
-      dockerfile: Dockerfile-py
+    image: tomastinoco/mos-compute-py:latest
     restart: on-failure
-    container_name: mos-compute-py
     environment:
       - MOS_BACKEND_HOST=backend
       - MOS_BACKEND_PORT=8000
@@ -84,11 +79,8 @@ services:
         condition: service_healthy
 
   compute-jl:
-    build: 
-      context: ./submodules/mos-compute/
-      dockerfile: Dockerfile-jl
+    image: tomastinoco/mos-compute-jl:latest
     restart: on-failure
-    container_name: mos-compute-jl
     environment:
       - MOS_BACKEND_HOST=backend
       - MOS_BACKEND_PORT=8000
@@ -104,4 +96,4 @@ services:
 
 volumes:
   postgres_data:
-  django_data:
+  backend_data:

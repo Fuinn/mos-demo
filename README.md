@@ -4,8 +4,8 @@ All-in-one MOS application launched using docker containers.
 
 ## Prerequisites
 
-* Isntall Docker
-* Update submodules with ``git submodule update --init --recursive``
+* Install Docker
+* Download the [docker-compose.yml](docker-compose.yml) file
 
 ## Launching the App
 
@@ -25,7 +25,7 @@ The default MOS admin user credentials are:
 
 ## Resetting all Data
 
-Execyte the following command from the location of the `docker-compose.yml` file:
+Execute the following command from the location of the `docker-compose.yml` file:
 ```
 sudo docker-compose down --volumes
 ```

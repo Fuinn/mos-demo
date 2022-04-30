@@ -1,9 +1,0 @@
-[submodule "submodules/mos-backend"]
-	path = submodules/mos-backend
-	url = git@github.com:Fuinn/mos-backend.git
-[submodule "submodules/mos-compute"]
-	path = submodules/mos-compute
-	url = git@github.com:Fuinn/mos-compute.git
-[submodule "submodules/mos-frontend"]
-	path = submodules/mos-frontend
-	url = git@github.com:Fuinn/mos-frontend.git
