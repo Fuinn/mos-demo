@@ -13,11 +13,6 @@ services:
 
   rabbit:
     image: rabbitmq:latest
-    healthcheck:
-      test: rabbitmq-diagnostics -q status
-      interval: 1s
-      timeout: 3s
-      retries: 30
 
   redis:
     image: redis:latest
@@ -75,8 +70,9 @@ services:
       - MOS_RABBIT_PWD=guest
       - MOS_RABBIT_HOST=rabbit
     depends_on:
-      rabbit:
-        condition: service_healthy
+      - rabbit
+      - backend
+      - frontend
 
   compute-jl:
     image: tomastinoco/mos-compute-jl:latest
@@ -91,8 +87,9 @@ services:
       - MOS_RABBIT_PWD=guest
       - MOS_RABBIT_HOST=rabbit
     depends_on:
-      rabbit:
-        condition: service_healthy  
+      - rabbit
+      - backend
+      - frontend
 
 volumes:
   postgres_data:

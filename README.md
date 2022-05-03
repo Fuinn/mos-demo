@@ -11,7 +11,7 @@ All-in-one MOS application launched using docker containers.
 
 Execute the following command from the location of the `docker-compose.yml` file:
 ```
-sudo docker-compose up --build
+sudo docker-compose up
 ```
 
 The following MOS components are then available:
