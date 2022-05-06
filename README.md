@@ -1,6 +1,6 @@
-# mos-demo-docker
+# mos-demo
 
-All-in-one MOS application launched using docker containers.
+MOS demo launched via docker-compose.
 
 ## Prerequisites
 
