@@ -18,7 +18,7 @@ services:
     image: redis:latest
 
   backend:
-    image: tomastinoco/mos-backend:latest
+    image: tomastinoco/mos-demo-backend:latest
     restart: on-failure
     environment:
       - MOS_BACKEND_DEBUG=1
@@ -50,7 +50,7 @@ services:
       - backend_data:/mos-backend/service/media
 
   frontend:
-    image: tomastinoco/mos-frontend:latest
+    image: tomastinoco/mos-demo-frontend:latest
     restart: on-failure
     ports:
       - "4200:4200"
@@ -58,7 +58,7 @@ services:
       - backend
 
   compute-py:
-    image: tomastinoco/mos-compute-py:latest
+    image: tomastinoco/mos-demo-compute-py:latest
     restart: on-failure
     environment:
       - MOS_BACKEND_HOST=backend
@@ -75,7 +75,7 @@ services:
       - frontend
 
   compute-jl:
-    image: tomastinoco/mos-compute-jl:latest
+    image: tomastinoco/mos-demo-compute-jl:latest
     restart: on-failure
     environment:
       - MOS_BACKEND_HOST=backend
