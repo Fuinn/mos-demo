@@ -30,13 +30,13 @@ Execute the following command from the location of the `docker-compose.yml` file
 sudo docker-compose stop
 ```
 
-## Update all packages
+## Update all Packages
 
-With the App stopped, execute the following command from the location of the `docker-compose.yml` file:
+With the app stopped, execute the following command from the location of the `docker-compose.yml` file:
 ```
 sudo docker-compose pull
 ```
-The App may then be relaunched using the `sudo docker-compose up` command above.	
+The app may then be relaunched using the `sudo docker-compose up` command above.	
 
 
 ## Resetting all Data
