@@ -23,6 +23,22 @@ The default MOS admin user credentials are:
 * username: ``mos``
 * password: ``demo``
 
+## Stopping the App
+
+The `Ctrl+C` keyboard command will stop the app, or alternatively execute the following command from the location of the `docker-compose.yml` file:
+```
+sudo docker-compose stop
+```
+
+## Update all Packages
+
+With the app stopped, execute the following command from the location of the `docker-compose.yml` file:
+```
+sudo docker-compose pull
+```
+The app may then be relaunched using the `sudo docker-compose up` command above.	
+
+
 ## Resetting all Data
 
 Execute the following command from the location of the `docker-compose.yml` file:
