@@ -7,6 +7,13 @@ MOS demo launched via docker-compose.
 * Install Docker
 * Download the [docker-compose.yml](docker-compose.yml) file
 
+## Pulling the latest Images
+
+Execute the following command from the location of the `docker-compose.yml` file:
+```
+sudo docker-compose pull
+```
+
 ## Launching the App
 
 Execute the following command from the location of the `docker-compose.yml` file:
@@ -29,15 +36,6 @@ The `Ctrl+C` keyboard command will stop the app, or alternatively execute the fo
 ```
 sudo docker-compose stop
 ```
-
-## Update all Packages
-
-With the app stopped, execute the following command from the location of the `docker-compose.yml` file:
-```
-sudo docker-compose pull
-```
-The app may then be relaunched using the `sudo docker-compose up` command above.	
-
 
 ## Resetting all Data
 
