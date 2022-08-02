@@ -50,7 +50,7 @@ No problem. Run the MOS demo without the compute workers using
 ```
 sudo docker-compose up --scale compute-py=0 --scale compute-jl=0
 ```
-and launch workers from your own local environmet:
-* [Python](https://github.com/Fuinn/mos-compute-py/blob/main/README.md)
-* [Julia](https://github.com/Fuinn/mos-compute-jl/blob/master/README.md)
+and launch workers from your own local environment:
+* [Python compute worker](https://github.com/Fuinn/mos-compute-py/blob/main/README.md)
+* [Julia compute worker](https://github.com/Fuinn/mos-compute-jl/blob/master/README.md)
 
