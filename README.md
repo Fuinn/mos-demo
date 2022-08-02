@@ -43,3 +43,14 @@ Execute the following command from the location of the `docker-compose.yml` file
 ```
 sudo docker-compose down --volumes
 ```
+
+## Do the demo compute workers not have the dependencies you need?
+
+No problem. Run the MOS demo without the compute workers using
+```
+sudo docker-compose up --scale compute-py=0 --scale compute-jl=0
+```
+and launch workers from your own local environmet:
+* [Python](https://github.com/Fuinn/mos-compute-py/blob/main/README.md)
+* [Julia](https://github.com/Fuinn/mos-compute-jl/blob/master/README.md)
+
