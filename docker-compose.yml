@@ -13,6 +13,8 @@ services:
 
   rabbit:
     image: rabbitmq:latest
+    ports:
+      - "5672:5672"
 
   redis:
     image: redis:latest
