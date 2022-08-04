@@ -3,7 +3,7 @@ version: '2.3'
 services:
 
   db:
-    image: postgres:latest
+    image: postgres:14.4
     environment:
       POSTGRES_USER: mos
       POSTGRES_PASSWORD: mos
@@ -12,12 +12,12 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   rabbit:
-    image: rabbitmq:latest
+    image: rabbitmq:3.10
     ports:
       - "5672:5672"
 
   redis:
-    image: redis:latest
+    image: redis:7.0
 
   backend:
     image: tomastinoco/mos-demo-backend:latest
